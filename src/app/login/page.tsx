@@ -4,11 +4,11 @@ import { createClient } from '@/lib/supabase/client';
 import { Auth } from '@supabase/auth-ui-react';
 import { ThemeSupa } from '@supabase/auth-ui-shared';
 import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Box, Typography, Card, CardContent } from '@mui/material';
 
 export default function LoginPage() {
-  const supabase = createClient();
+  const [supabase] = useState(() => createClient());
   const router = useRouter();
 
   useEffect(() => {
