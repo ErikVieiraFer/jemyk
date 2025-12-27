@@ -7,6 +7,8 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { Box, Typography, Card, CardContent } from '@mui/material';
 
+export const dynamic = 'force-dynamic';
+
 export default function LoginPage() {
   const [supabase] = useState(() => createClient());
   const router = useRouter();
