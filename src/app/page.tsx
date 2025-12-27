@@ -8,6 +8,7 @@ import {
   AppBar,
   Toolbar 
 } from '@mui/material';
+import Link from 'next/link';
 import TransactionForm from '@/components/TransactionForm';
 
 export default async function Home() {
@@ -40,6 +41,9 @@ export default async function Home() {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Jemyk
           </Typography>
+          <Button color="inherit" component={Link} href="/categories">
+            Categorias
+          </Button>
           <form action={signOut}>
             <Button color="inherit" type="submit">
               Sair
