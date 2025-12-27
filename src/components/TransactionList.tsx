@@ -21,7 +21,7 @@ interface Transaction {
   type: 'income' | 'expense';
   categories: {
     name: string;
-  } | null;
+  }[] | null;
 }
 
 interface TransactionListProps {
@@ -73,7 +73,7 @@ export default function TransactionList({ transactions }: TransactionListProps) 
                   {formatDate(transaction.created_at)}
                 </TableCell>
                 <TableCell>{transaction.description}</TableCell>
-                <TableCell>{transaction.categories?.name ?? 'Sem categoria'}</TableCell>
+                <TableCell>{transaction.categories?.[0]?.name ?? 'Sem categoria'}</TableCell>
                 <TableCell align="right" sx={{ color: transaction.type === 'income' ? 'green' : 'red' }}>
                   {transaction.type === 'income' ? '+' : '-'} {formatCurrency(Math.abs(transaction.amount))}
                 </TableCell>
