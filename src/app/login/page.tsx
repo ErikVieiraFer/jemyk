@@ -58,7 +58,16 @@ export default function LoginPage() {
           </Typography>
           <Auth
             supabaseClient={supabase}
-            appearance={{ theme: ThemeSupa }}
+            appearance={{
+              theme: ThemeSupa,
+              variables: {
+                default: {
+                  colors: {
+                    inputText: '#d1d5db',
+                  },
+                },
+              },
+            }}
             providers={[]}
             localization={{
               variables: {

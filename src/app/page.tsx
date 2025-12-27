@@ -13,9 +13,9 @@ import {
 export default async function Home() {
   const supabase = createClient();
 
-  const { data: { user } } = await supabase.auth.getUser();
+  const { data, error } = await supabase.auth.getUser();
 
-  if (!user) {
+  if (error || !data?.user) {
     redirect('/login');
   }
 
@@ -56,7 +56,7 @@ export default async function Home() {
         <Container>
           <Typography variant="h5">Dashboard</Typography>
           <Typography paragraph>
-            Bem-vindo(a), {user.email}!
+            Bem-vindo(a), {data.user.email}!
           </Typography>
           <Typography paragraph>
             Em breve aqui você verá seu resumo financeiro. O próximo passo é construir o formulário para adicionar transações.
