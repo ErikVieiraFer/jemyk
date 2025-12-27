@@ -1,5 +1,4 @@
 import { createClient } from '@/lib/supabase/server';
-import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { 
   Container, 
@@ -9,6 +8,7 @@ import {
   AppBar,
   Toolbar 
 } from '@mui/material';
+import TransactionForm from '@/components/TransactionForm';
 
 export default async function Home() {
   const supabase = createClient();
@@ -18,6 +18,9 @@ export default async function Home() {
   if (error || !data?.user) {
     redirect('/login');
   }
+
+  // Fetch categories for the form
+  const { data: categories } = await supabase.from('categories').select('id, name');
 
   const signOut = async () => {
     'use server';
@@ -58,9 +61,9 @@ export default async function Home() {
           <Typography paragraph>
             Bem-vindo(a), {data.user.email}!
           </Typography>
-          <Typography paragraph>
-            Em breve aqui você verá seu resumo financeiro. O próximo passo é construir o formulário para adicionar transações.
-          </Typography>
+          
+          <TransactionForm categories={categories ?? []} />
+
         </Container>
       </Box>
     </Box>
