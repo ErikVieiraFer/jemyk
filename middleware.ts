@@ -27,7 +27,7 @@ export async function middleware(request: NextRequest) {
         },
         remove(name: string, options: CookieOptions) {
           // If the cookie is removed, update the response cookies.
-          response.cookies.delete(name, options)
+          response.cookies.delete({ name, ...options })
         },
       },
     }
