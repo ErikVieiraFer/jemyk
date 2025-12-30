@@ -6,9 +6,8 @@ import { revalidatePath } from 'next/cache';
 export async function addTransaction(formData: FormData) {
   const supabase = createClient();
 
-  // Pega o user_id da sessão atual
-  const { data: { user } } = await supabase.auth.getUser();
-  if (!user) {
+  const { data: { user }, error: authError } = await supabase.auth.getUser();
+  if (authError || !user) {
     throw new Error('User not found');
   }
 
@@ -34,9 +33,15 @@ export async function addTransaction(formData: FormData) {
 export async function addCategory(formData: FormData) {
   const supabase = createClient();
 
+  const { data: { user }, error: authError } = await supabase.auth.getUser();
+  if (authError || !user) {
+    throw new Error('User not found');
+  }
+
   const categoryData = {
     name: formData.get('name') as string,
     description: formData.get('description') as string,
+    user_id: user.id,
   };
 
   const { error } = await supabase.from('categories').insert([categoryData]);
