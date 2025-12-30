@@ -16,6 +16,7 @@ export async function addTransaction(formData: FormData) {
     amount: parseFloat(formData.get('amount') as string),
     type: formData.get('type') as string,
     category_id: formData.get('category_id') as string,
+    transaction_date: formData.get('transaction_date') as string,
     user_id: user.id,
   };
 

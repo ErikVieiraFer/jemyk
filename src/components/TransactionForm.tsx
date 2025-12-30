@@ -57,6 +57,17 @@ export default function TransactionForm({ categories }: TransactionFormProps) {
           inputProps={{ step: '0.01' }} // para permitir centavos
         />
 
+        <TextField
+          label="Data da Transação"
+          name="transaction_date"
+          type="date"
+          defaultValue={new Date().toISOString().split('T')[0]} // Formato YYYY-MM-DD
+          InputLabelProps={{
+            shrink: true,
+          }}
+          required
+        />
+
         <FormControl component="fieldset">
           <FormLabel component="legend">Tipo</FormLabel>
           <RadioGroup row name="type" defaultValue="expense">
