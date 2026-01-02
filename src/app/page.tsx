@@ -61,7 +61,7 @@ export default async function Home() {
   const donutChartData = currentMonthTransactions
     .filter(t => t.type === 'expense')
     .reduce((acc, transaction) => {
-      const categoryName = transaction.categories?.name ?? 'Sem categoria';
+      const categoryName = transaction.categories?.[0]?.name ?? 'Sem categoria';
       const existingCategory = acc.find(item => item.name === categoryName);
       if (existingCategory) {
         existingCategory.value += transaction.amount;

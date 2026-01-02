@@ -33,7 +33,7 @@ interface Transaction {
   categories: {
     id: string;
     name: string;
-  } | null;
+  }[] | null;
 }
 
 interface Category {
@@ -96,7 +96,7 @@ export default function TransactionList({ transactions, categories }: Transactio
               <CardContent>
                 <Typography variant="body1">{transaction.description}</Typography>
                 <Typography variant="body2" color="text.secondary">
-                  {formatDate(transaction.transaction_date)}
+                  {formatDate(transaction.transaction_date)} - {transaction.categories?.[0]?.name ?? 'Sem categoria'}
                 </Typography>
                 <Typography 
                   variant="h6" 
@@ -138,10 +138,10 @@ export default function TransactionList({ transactions, categories }: Transactio
                   }}
                 >
                   <TableCell component="th" scope="row">
-                    {formatDate(transaction.created_at)}
+                    {formatDate(transaction.transaction_date)}
                   </TableCell>
                   <TableCell>{transaction.description}</TableCell>
-                  <TableCell>{transaction.categories?.name ?? 'Sem categoria'}</TableCell>
+                  <TableCell>{transaction.categories?.[0]?.name ?? 'Sem categoria'}</TableCell>
                   <TableCell align="right" sx={{ color: transaction.type === 'income' ? 'green' : 'red' }}>
                     {transaction.type === 'income' ? '+' : '-'} {formatCurrency(Math.abs(transaction.amount))}
                   </TableCell>
