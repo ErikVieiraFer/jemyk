@@ -70,3 +70,32 @@ export async function deleteCategory(formData: FormData) {
   revalidatePath('/categories');
   revalidatePath('/');
 }
+
+export async function updateTransaction(formData: FormData) {
+  const supabase = createClient();
+
+  const { data: { user }, error: authError } = await supabase.auth.getUser();
+  if (authError || !user) {
+    throw new Error('User not found');
+  }
+
+  const transactionId = formData.get('id') as string;
+
+  const transactionData = {
+    description: formData.get('description') as string,
+    amount: parseFloat(formData.get('amount') as string),
+    type: formData.get('type') as string,
+    category_id: formData.get('category_id') as string,
+    transaction_date: formData.get('transaction_date') as string,
+    user_id: user.id,
+  };
+
+  const { error } = await supabase.from('transactions').update(transactionData).match({ id: transactionId });
+
+  if (error) {
+    console.error('Error updating transaction:', error);
+    throw new Error('Failed to update transaction');
+  }
+
+  revalidatePath('/');
+}
